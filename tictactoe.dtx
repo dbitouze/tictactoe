@@ -1,0 +1,732 @@
+%\iffalse meta-comment
+%Copyright (c) 2025 Peter Rowlett
+%
+%The package is licenced under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0). To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+%\fi
+%\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+%\title{tictactoe v1.0}
+%\author{Peter Rowlett}
+%\maketitle
+%
+%\noindent
+%\tictactoe{X,,,,O,X,,}{}
+%\renewcommand{\tictocgridlinescol}{magenta}
+%\renewcommand{\tictocfullcol}{cyan}
+%\renewcommand{\tictocfaintcol}{lime}
+%\tictactoe{o,X,o,X,X,o,X,o,X}{}
+%\renewcommand{\tictocgridlinescol}{black}
+%\renewcommand{\tictocfullcol}{black}
+%\renewcommand{\tictocfaintcol}{lightgray}
+%\tictactoe{O,X,,X,O,X,X,O,O}{7}
+%\tictactoe{n,n,X,n,O,n,n,n,n}{}
+%
+%\tableofcontents
+%
+%\section{Introduction}
+%
+%This package provides commands for drawing grids for the game known variously as tic-tac-toe\footnote{I noticed Martin Gardner writes it ticktacktoe, and I learn from Wikipedia that Americans also spell it tick-tack-toe, tick-tat-toe, and tit-tat-toe.}, Noughts and Crosses\footnote{Alternatively, I'm sorry to report, Naughts and Crosses.}, Xs and Os, and so on.
+%
+%I have chosen the name \verb|tictactoe| even though I would prefer something based on Noughts and Crosses as I think it is well-recognised and I think command names based on \verb|\noughtsandcrosses| are too unwieldy. The package also provides an option to enable commands based on \verb|\ox|, though I think this is quite short for a command name and am concerned about clashes.
+%
+%\section{Drawing a basic board}
+%
+%The basic command is \verb|\tictactoe{grid positions}{winning line}|. The \verb|grid positions| are a comma-separated list of nine items, any of which can be blank. The \verb|winning line| is explained later; for now, since it can be blank we will leave it blank.
+%
+%For example, to produce a blank board, use \verb|\tictactoe{,,,,,,,,}{}| (left below). To put \nought in one of the cells, put the letter `O' in that position, and put `X' for \cross. For example, \\
+%\verb|\tictactoe{X,,,,O,,,,}{}| produces the board on the right below.
+%
+%\noindent\tictactoe{,,,,,,,,}{}
+%\tictactoe{X,,,,O,,,,}{}
+%
+%\section{Winning lines}
+%
+%The second input to the command is which line to mark as the winning line, if any. Winning lines are all a little askew just for the look of thing, I felt it looked odd to be straight through the centre of each cell, especially when drawing diagonally through a winning line of \cross's. 
+%
+%The rows are numbered 1, 2, and 3. For example the first board here is\\
+%\verb|\tictactoe{X,X,X,,,,,,}{1}|.
+%
+%\noindent\tictactoe{X,X,X,,,,,,}{1}
+%\tictactoe{,,,X,X,X,,,}{2}
+%\tictactoe{,,,,,,X,X,X}{3}
+%
+%\noindent\tictactoe{O,O,O,,,,,,}{1}
+%\tictactoe{,,,O,O,O,,,}{2}
+%\tictactoe{,,,,,,O,O,O}{3}
+%
+%The columns are numbered 4, 5, and 6. For example the first board here is\\
+%\verb|\tictactoe{X,,,X,,,X,,}{4}|.
+%
+%\noindent\tictactoe{X,,,X,,,X,,}{4}
+%\tictactoe{,X,,,X,,,X,}{5}
+%\tictactoe{,,X,,,X,,,X}{6}
+%
+%\noindent\tictactoe{O,,,O,,,O,,}{4}
+%\tictactoe{,O,,,O,,,O,}{5}
+%\tictactoe{,,O,,,O,,,O}{6}
+%
+%The diagonals are numbered 7 and 8. For example the first board here is\\
+%\verb|\tictactoe{X,,,,X,,,,X}{7}|.
+%
+%\noindent\tictactoe{X,,,,X,,,,X}{7}
+%\tictactoe{,,X,,X,,X,,}{8}
+%\tictactoe{O,,,,O,,,,O}{7}
+%\tictactoe{,,O,,O,,O,,}{8}
+%
+%There is no restriction on which line can be marked, for example it does not need to hold three matching symbols. For example \verb|\tictactoe{O,X,X,,O,,,,X}{3}| produces
+%
+%\noindent\tictactoe{O,X,X,,O,,,,X}{3}
+%
+%\section{Highlighting a move} 
+%
+%It is sometimes desirable to highlight the current move against the rest of the board. By default (see section \ref{colour} for colour options), the symbols produced by inputting `X' and `O' are black and those produced by `x' and `o' are light grey. For example, \verb|\tictactoe{O,x,,x,o,x,x,o,o}{7}| produces
+%
+%\noindent\tictactoe{O,x,,x,o,x,x,o,o}{7}
+%
+%\section{Numbering the empty cells}
+%
+%It is possible to place a faint cell number in empty cells by putting an `n' in that position. For example \verb|\tictactoe{X,n,n,n,O,n,n,n,n}{}| produces
+%
+%\noindent\tictactoe{X,n,n,n,O,n,n,n,n}{}
+%
+%\section{\nought and \cross symbols in text}
+%
+%Inline in text, write \verb|\nought| and \verb|\cross|. These are by default 1em square and therefore will respond (somewhat) to the font size. 
+%
+%{\verb|\tiny|: \tiny Inline in text, write \nought and \cross.}
+%
+%{\verb|\scriptsize|: \scriptsize Inline in text, write \nought and \cross.} 
+%
+%{\verb|\footnotesize|: \footnotesize Inline in text, write \nought and \cross.} 
+%
+%{\verb|\normalsize|: \normalsize Inline in text, write \nought and \cross.} 
+%
+%{\verb|\large|: \large Inline in text, write \nought and \cross.} 
+%
+%{\verb|\Large|: \Large Inline in text, write \nought and \cross.} 
+%
+%{\verb|\huge|: \huge Inline in text, write \nought and \cross.}  
+%
+%{\verb|\Huge|: \Huge Inline in text, write \nought and \cross.}
+%
+%\section{Boards with labels (e.g. scores)}
+%
+%For some purposes, it is useful to provide labels under each board, for example these might be scores in a game tree. 
+%
+%The command \verb|\tictactoescore| is used to add a label below each board. For example, \verb|\tictactoescore{,X,,X,O,X,,O,}{}{-1}| produces
+%
+%\noindent\tictactoescore{,X,,X,O,X,,O,}{}{-1}
+%
+%\newpage 
+%
+%The label can in principle be any text, for example \verb|\tictactoescore{,X,,X,O,X,,O,}{}{A}| and \verb|\tictactoescore{,X,,X,O,X,,O,}{}{Peter's Noughts and Crosses game}| produce
+%
+%\noindent\tictactoescore{,X,,X,O,X,,O,}{}{A}
+%\tictactoescore{,X,,X,O,X,,O,}{}{Peter's Noughts and Crosses game}
+%
+%By default here there is a box around the grid and corresponding score to associate them. It is possible to draw these without the surrounding box, for example using\\ 
+%\verb|\tictactoescorenobox{,X,,X,O,X,,O,}{}{-1}| produces
+%
+%\noindent\tictactoescorenobox{,X,,X,O,X,,O,}{}{-1}
+%
+%One possible use for boards with scores is in a game tree using the \verb|forest| package. Width is of course an issue, here the nodes further down the tree are sized smaller accordingly (see section \ref{size}).\bigskip
+%
+%\noindent\begin{forest}
+%    [{\tictactoescore[0.5]{,X,,X,O,X,,O,}{}{-1}}
+%    [{\tictactoescore[0.3]{O,x,,x,o,x,,o,}{}{0}}
+%    [{\tictactoescore[0.25]{o,x,X,x,o,x,,o,}{}{-1}}
+%    [{\tictactoescore[0.15]{o,x,x,x,o,x,O,o,}{}{+1}}
+%    [{\tictactoescore[0.15]{o,x,x,x,o,x,o,o,X}{6}{+1}}]
+%    ]
+%    [{\tictactoescore[0.15]{o,x,x,x,o,x,,o,O}{7}{-1}}]
+%    ]
+%    [{\tictactoescore[0.25]{o,x,,x,o,x,X,o,}{}{-1}}
+%    [{\tictactoescore[0.15]{o,x,O,x,o,x,x,o,}{}{0}}
+%    [{\tictactoescore[0.15]{o,x,o,x,o,x,x,o,X}{}{0}}]
+%    ]
+%    [{\tictactoescore[0.15]{o,x,,x,o,x,x,o,O}{7}{-1}}]
+%    ]
+%    [{\tictactoescore[0.25]{o,x,,x,o,x,,o,X}{}{0}}
+%    [{\tictactoescore[0.15]{o,x,O,x,o,x,,o,x}{}{0}}
+%    [{\tictactoescore[0.15]{o,x,o,x,o,x,X,o,x}{}{0}}]
+%    ]
+%    [{\tictactoescore[0.15]{o,x,,x,o,x,O,o,x}{}{+1}}
+%    [{\tictactoescore[0.15]{o,x,X,x,o,x,o,o,x}{6}{+1}}]
+%    ]
+%    ]
+%    ]
+%    [{\tictactoescore[0.3]{,x,,x,o,x,O,o,}{}{-1}}
+%    [{\tictactoescore[0.25]{X,x,,x,o,x,o,o,}{}{-1}}
+%    [{\tictactoescore[0.15]{x,x,O,x,o,x,o,o,}{8}{-1}}]
+%    [{\tictactoescore[0.15]{x,x,,x,o,x,o,o,O}{3}{-1}}]
+%    ]
+%    [{\tictactoescore[0.25]{,x,X,x,o,x,o,o,}{}{-1}}
+%    [{\tictactoescore[0.15]{O,x,x,x,o,x,o,o,}{}{+1}}
+%    [{\tictactoescore[0.15]{o,x,x,x,o,x,o,o,X}{6}{+1}}]
+%    ]
+%    [{\tictactoescore[0.15]{,x,x,x,o,x,o,o,O}{3}{-1}}]
+%    ]
+%    [{\tictactoescore[0.25]{,x,,x,o,x,o,o,X}{}{-1}}
+%    [{\tictactoescore[0.15]{O,x,,x,o,x,o,o,x}{}{+1}}
+%    [{\tictactoescore[0.15]{o,x,X,x,o,x,o,o,x}{6}{+1}}]
+%    ]
+%    [{\tictactoescore[0.15]{,x,O,x,o,x,o,o,x}{8}{-1}}]
+%    ]
+%    ]
+%    ]
+%\end{forest}
+%
+%The code that produced this diagram is below.
+%
+%\begin{verbatim}\begin{forest}
+%[{\tictactoescore[0.5]{,X,,X,O,X,,O,}{}{-1}}
+%    [{\tictactoescore[0.3]{O,x,,x,o,x,,o,}{}{0}}
+%        [{\tictactoescore[0.25]{o,x,X,x,o,x,,o,}{}{-1}}
+%            [{\tictactoescore[0.1]{o,x,x,x,o,x,O,o,}{}{+1}}
+%                [{\tictactoescore[0.1]{o,x,x,x,o,x,o,o,X}{6}{+1}}]
+%            ]
+%            [{\tictactoescore[0.1]{o,x,x,x,o,x,,o,O}{7}{-1}}]
+%        ]
+%        [{\tictactoescore[0.25]{o,x,,x,o,x,X,o,}{}{-1}}
+%            [{\tictactoescore[0.1]{o,x,O,x,o,x,x,o,}{}{0}}
+%                [{\tictactoescore[0.1]{o,x,o,x,o,x,x,o,X}{}{0}}]
+%            ]
+%            [{\tictactoescore[0.1]{o,x,,x,o,x,x,o,O}{7}{-1}}]
+%        ]
+%        [{\tictactoescore[0.25]{o,x,,x,o,x,,o,X}{}{0}}
+%            [{\tictactoescore[0.1]{o,x,O,x,o,x,,o,x}{}{0}}
+%                [{\tictactoescore[0.1]{o,x,o,x,o,x,X,o,x}{}{0}}]
+%            ]
+%            [{\tictactoescore[0.1]{o,x,,x,o,x,O,o,x}{}{+1}}
+%                [{\tictactoescore[0.1]{o,x,X,x,o,x,o,o,x}{6}{+1}}]
+%            ]
+%        ]
+%    ]
+%    [{\tictactoescore[0.3]{,x,,x,o,x,O,o,}{}{-1}}
+%        [{\tictactoescore[0.25]{X,x,,x,o,x,o,o,}{}{-1}}
+%            [{\tictactoescore[0.1]{x,x,O,x,o,x,o,o,}{8}{-1}}]
+%            [{\tictactoescore[0.1]{x,x,,x,o,x,o,o,O}{3}{-1}}]
+%        ]
+%        [{\tictactoescore[0.25]{,x,X,x,o,x,o,o,}{}{-1}}
+%            [{\tictactoescore[0.1]{O,x,x,x,o,x,o,o,}{}{+1}}
+%                [{\tictactoescore[0.1]{o,x,x,x,o,x,o,o,X}{6}{+1}}]
+%            ]
+%            [{\tictactoescore[0.1]{,x,x,x,o,x,o,o,O}{3}{-1}}]
+%        ]
+%        [{\tictactoescore[0.25]{,x,,x,o,x,o,o,X}{}{-1}}
+%            [{\tictactoescore[0.1]{O,x,,x,o,x,o,o,x}{}{+1}}
+%                [{\tictactoescore[0.1]{o,x,X,x,o,x,o,o,x}{6}{+1}}]
+%            ]
+%            [{\tictactoescore[0.1]{,x,O,x,o,x,o,o,x}{8}{-1}}]
+%        ]
+%    ]
+%]
+%\end{forest}\end{verbatim}
+%
+%\newpage
+%
+%\section{Customisation}
+%
+%\subsection{Size}\label{size}
+%
+%Different sizes are possible by passing a scale factor when calling commands. For example, \verb|\tictactoe[scale]{O,X,,X,O,X,X,O,O}{7}| produces, for \verb|0.2|, \verb|0.5|, \verb|3|, 
+%
+%\noindent\tictactoe[0.2]{O,X,,X,O,X,X,O,O}{7}
+%\tictactoe[0.5]{O,X,,X,O,X,X,O,O}{7}
+%\tictactoe[3]{O,X,,X,O,X,X,O,O}{7}
+%
+%It is possible to pass a scale factor to \verb|\tictactoe|, \verb|\tictactoescore|, and \verb|\tictactoescorenobox|. It is also possible to pass a scale factor to \verb|\nought| and \verb|\cross|, but note these do not align\footnote{This is because \texttt{\textbackslash tictactoe} etc. are based on the default TikZ unit (cm) so they don't respond when the font size changes, while \texttt{\textbackslash nought} and \texttt{\textbackslash cross} are based on em, so they do. Thus \texttt{\textbackslash nought} and \texttt{\textbackslash cross} have dimensions 1em, and scaling this doesn't scale as quickly as 1cm.}, meaning for example \verb|\cross[2]| doesn't produce a cross as big as a cross in \verb|\tictactoe[2]{X,,,,,,,,}{}|. \smallskip
+%
+%\begin{minipage}[t]{0.5\linewidth}
+%    Here's \verb|\cross[2]|: \cross[2]
+%\end{minipage}\begin{minipage}[t]{0.5\linewidth}
+%    Here's \verb|\tictactoe[2]{X,,,,,,,,}{}|:
+%    
+%    \noindent\tictactoe[2]{X,,,,,,,,}{}
+%\end{minipage}
+%
+%\subsection{Colour}\label{colour}
+%
+%Four colours are defined by commands.
+%
+%\begin{tabular}{ll}
+%    \verb|\tictocfullcol| & full colour pieces\\
+%    \verb|\tictocfaintcol| & faint colour pieces\\
+%    \verb|\tictocwincol| & winning lines\\
+%    \verb|\tictocgridlinescol| & gridlines\\
+%\end{tabular}
+%
+%The default colours are defined like this.
+%
+%\begin{verbatim}\newcommand{\tictocfullcol}{black}
+%\newcommand{\tictocfaintcol}{lightgray}
+%\newcommand{\tictocwincol}{gray}
+%\newcommand{\tictocgridlinescol}{black}\end{verbatim}
+%
+%It is therefore possible to change these by redefining these commands. For example
+%
+%\begin{verbatim}\renewcommand{\tictocfullcol}{lime}
+%\renewcommand{\tictocfaintcol}{cyan}
+%\renewcommand{\tictocwincol}{yellow}
+%\renewcommand{\tictocgridlinescol}{magenta}
+%\tictactoe{X,x,O,o,n,X,X,X,X}{3}\end{verbatim}
+%
+%produces
+%
+%\renewcommand{\tictocfullcol}{lime}
+%\renewcommand{\tictocfaintcol}{cyan}
+%\renewcommand{\tictocwincol}{yellow}
+%\renewcommand{\tictocgridlinescol}{magenta}
+%
+%\noindent\tictactoe{X,x,O,o,n,X,X,X,X}{3}
+%
+%\renewcommand{\tictocfullcol}{black}
+%\renewcommand{\tictocfaintcol}{lightgray}
+%\renewcommand{\tictocwincol}{gray}
+%\renewcommand{\tictocgridlinescol}{black}
+%
+%As well as just changing the colouring, one possible application is to colour \nought's and \cross's in different colours, if you then use uppercase for one and lowercase for the other, and if you don't wish to highlight a move. For example
+%
+%\begin{verbatim}\renewcommand{\tictocfullcol}{red}
+%\renewcommand{\tictocfaintcol}{blue}
+%\tictactoe{o,X,o,X,X,o,X,o,X}{}\end{verbatim}
+%
+%produces 
+%
+%\renewcommand{\tictocfullcol}{red}
+%\renewcommand{\tictocfaintcol}{blue}
+%
+%\noindent\tictactoe{o,X,o,X,X,o,X,o,X}{}
+%
+%\renewcommand{\tictocfullcol}{black}
+%\renewcommand{\tictocfaintcol}{lightgray}
+%
+%\newpage 
+%
+%\subsection{Different symbols}
+%
+%The commands like \verb|\tictactoe| expect input to be one of the characters `X', `x', `O', `o', or `n'. As a fallback (and not really intended as a feature), if the input is none of these, it tries to place the input into the cell directly. For example, the first of these is produced by \verb"\tictactoe{\#,*,\&,\%,5,;,:,=,!}{}".
+%
+%\noindent\tictactoe{\#,*,\&,\%,5,;,:,=,!}{}%
+%\tictactoe{,,Z,,Y,,?,,}{}%
+%\tictactoe[2.5]{corner,edge,corner,edge,centre,edge,corner,edge,corner}{}
+%
+%\subsubsection{Letters that are not permitted, and how to permit them}
+%
+%
+%If you want to put a standard letter `X', `x', `O', `o', or `n' in the grid, you cannot because the package will draw its own symbol or number instead. However you can get around this by redefining commands. 
+%
+%For example, input `X' is tested against the value of \verb|\tictacX| and if it matches, it draws a cross. (And there are similar commands for the other inputs.) If after loading \verb|tictactoe| you redefine \verb|\tictacX| to some other letter, then your letter becomes the trigger for drawing a cross and you can put an `X' in the grid without obstruction. For example, the code below redefines these commands to use `P', `p', `Q', `q', and `r', allowing `X', `x', `O', `o', and `n' in the grid. 
+%
+%\begin{verbatim}\documentclass{article}
+%\usepackage{tictactoe}
+%\renewcommand{\tictacX}{P}
+%\renewcommand{\tictacx}{p}
+%\renewcommand{\tictacO}{Q}
+%\renewcommand{\tictaco}{q}
+%\renewcommand{\tictacn}{r}
+%\begin{document}
+%    \tictactoe{X,O,x,o,n,X,X,X,X}{3}
+%    \tictactoe{P,p,Q,q,r,P,P,P,P}{3}
+%\end{document}\end{verbatim}
+%
+%\newpage
+%
+%This will produce
+%
+%\renewcommand{\tictacX}{P}
+%\renewcommand{\tictacx}{p}
+%\renewcommand{\tictacO}{Q}
+%\renewcommand{\tictaco}{q}
+%\renewcommand{\tictacn}{r}
+%\tictactoe{X,x,O,o,n,X,X,X,X}{3}
+%\tictactoe{P,p,Q,q,r,P,P,P,P}{3}
+%\renewcommand{\tictacX}{X}
+%\renewcommand{\tictacx}{x}
+%\renewcommand{\tictacO}{O}
+%\renewcommand{\tictaco}{o}
+%\renewcommand{\tictacn}{n}
+%
+%To restore the default values use
+%
+%\begin{verbatim}\renewcommand{\tictacX}{X}
+%\renewcommand{\tictacx}{x}
+%\renewcommand{\tictacO}{O}
+%\renewcommand{\tictaco}{o}
+%\renewcommand{\tictacn}{n}\end{verbatim}
+%
+%\subsection{\nought{}s and \cross{s} and \nought's and \cross's}
+%
+%The commands \verb|\nought| and \verb|\cross| use the \verb|xspace| package to place a space after them or not depending on context. For example in the code 
+%
+%\begin{verbatim}Place in the grid either \nought or \cross.\end{verbatim}
+%
+%it knows to put a space after the \nought but not after the \cross. 
+%
+%One issue with this is that sometimes you do want another character straight after the command. Sometimes this works fine, for example if you want ``\nought's'', you simply use \verb|\nought's|. However, a letter after the symbol is more problematic: \verb|\noughts| is not valid, and \verb|\nought s| produces a space, like ``\nought s''. The solution is to use an empty set of braces, for example \verb|\nought{}s| produces \nought{}s. 
+%
+%\subsection{Non-American English command options}\label{ox}
+%
+%Instead of \verb|\tictactoe|, \verb|\tictactoescore|, and \verb|\tictactoescorenobox|, you can use \verb|\ox|, \verb|\oxscore|, and \verb|\oxscorenobox| if you enable the \verb|ox| option when loading the package. 
+%
+%\begin{verbatim}\usepackage[ox]{tictactoe}\end{verbatim}
+%
+%These are used in exactly the same way, including optional scale factor (in fact, the \verb|\tictactoe| versions are still defined, just the \verb|\ox| commands pass your input onto their American cousins). For example, \verb|\ox{O,x,,x,o,x,x,o,o}{7}| produces (provided the \verb|ox| option was loaded)
+%
+%\noindent\ox{O,x,,x,o,x,x,o,o}{7}
+%
+%If you get a clash because \verb|\ox| is already used for something else, simply remove the \verb|[ox]| option, grit your teeth, and use \verb|\tictactoe|.
+%
+%\newpage 
+%
+%\appendix
+%
+%\section{Command and related names used by this package}
+%
+%I tried to name non-user commands, counters, and TikZ style with the prefix \verb|tictac|, to hopefully avoid clashes. Details below.
+%
+%\subsection{Counters}
+%
+%\begin{verbatim}tictacrowmakercounter
+%tictacrowmakermax
+%tictaccellcounter\end{verbatim}
+%
+%\subsection{Commands}
+%
+%\begin{verbatim}\tictacX
+%\tictacx
+%\tictacO
+%\tictaco
+%\tictacn
+%\tictacscale
+%\tictocfullcol
+%\tictocfaintcol
+%\tictocwincol
+%\tictocgridlinescol
+%\tictaccellmaker
+%\tictaccellmarker
+%\tictacrowmaker
+%\tictactoegrid
+%\cross
+%\nought
+%\tictactoe
+%\tictactoescore
+%\tictactoescorenobox
+%\tictacscorewidth
+%\tictacfontsize
+%\tictacfontspacing
+%\ox
+%\oxscore
+%\oxscorenobox\end{verbatim}
+%
+%\subsection{TikZ style names}
+%
+%Within TikZ, the following styles are defined:
+%\begin{verbatim}tictacfullcirc
+%tictacfullcross
+%tictacfaintcirc
+%tictacfaintcross
+%tictacwin\end{verbatim}
+%
+%\subsection{Other}
+%
+%The package also creates an \verb|\iftictactoeox|. 
+%\iffalse
+%<*documentation>
+\documentclass[a4paper]{article}
+\usepackage{a4wide}
+\usepackage[ox]{tictactoe}
+\usepackage{doc}
+\usepackage{forest}
+\usepackage{upquote}
+\begin{document}
+\DocInput{tictactoe.dtx}
+\end{document}
+%</documentation>
+%\fi
+%\newpage
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*tictactoe>
+\ProvidesPackage{tictactoe}[2024/06/20 tictactoe 1.0]
+
+% dependencies 
+\RequirePackage{tikz}
+\RequirePackage{xspace}
+
+\makeatletter
+\@ifundefined{c@tictacrowmakercounter}{}
+{\PackageWarning{tictactoe}{counter `tictacrowmakercounter' already defined}}
+\@ifundefined{c@tictacrowmakermax}{}
+{\PackageWarning{tictactoe}{counter `tictacrowmakermax' already defined}}
+\@ifundefined{c@tictaccellcounter}{}
+{\PackageWarning{tictactoe}{counter `tictaccellcounter' already defined}}
+\@ifundefined{tictacX}{}
+{\PackageWarning{tictactoe}{command `tictacX' already defined}}
+\@ifundefined{tictacx}{}
+{\PackageWarning{tictactoe}{command `tictacx' already defined}}
+\@ifundefined{tictacO}{}
+{\PackageWarning{tictactoe}{command `tictacO' already defined}}
+\@ifundefined{tictaco}{}
+{\PackageWarning{tictactoe}{command `tictaco' already defined}}
+\@ifundefined{tictacn}{}
+{\PackageWarning{tictactoe}{command `tictacn' already defined}}
+\@ifundefined{tictacscale}{}
+{\PackageWarning{tictactoe}{command `tictacscale' already defined}}
+\@ifundefined{tictocfullcol}{}
+{\PackageWarning{tictactoe}{command `tictocfullcol' already defined}}
+\@ifundefined{tictocfaintcol}{}
+{\PackageWarning{tictactoe}{command `tictocfaintcol' already defined}}
+\@ifundefined{tictocwincol}{}
+{\PackageWarning{tictactoe}{command `tictocwincol' already defined}}
+\@ifundefined{tictocgridlinescol}{}
+{\PackageWarning{tictactoe}{command `tictocgridlinescol' already defined}}
+\@ifundefined{tictaccellmaker}{}
+{\PackageWarning{tictactoe}{command `tictaccellmaker' already defined}}
+\@ifundefined{tictaccellmarker}{}
+{\PackageWarning{tictactoe}{command `tictaccellmarker' already defined}}
+\@ifundefined{tictacrowmaker}{}
+{\PackageWarning{tictactoe}{command `tictacrowmaker' already defined}}
+\@ifundefined{tictactoegrid}{}
+{\PackageWarning{tictactoe}{command `tictactoegrid' already defined}}
+\@ifundefined{cross}{}
+{\PackageWarning{tictactoe}{command `cross' already defined}}
+\@ifundefined{nought}{}
+{\PackageWarning{tictactoe}{command `nought' already defined}}
+\@ifundefined{tictactoe}{}
+{\PackageWarning{tictactoe}{command `tictactoe' already defined}}
+\@ifundefined{tictactoescore}{}
+{\PackageWarning{tictactoe}{command `tictactoescore' already defined}}
+\@ifundefined{tictactoescorenobox}{}
+{\PackageWarning{tictactoe}{command `tictactoescorenobox' already defined}}
+\@ifundefined{tictacscorewidth}{}
+{\PackageWarning{tictactoe}{command `tictacscorewidth' already defined}}
+\@ifundefined{tictacfontsize}{}
+{\PackageWarning{tictactoe}{command `tictacfontsize' already defined}}
+\@ifundefined{tictacfontspacing}{}
+{\PackageWarning{tictactoe}{command `tictacfontspacing' already defined}}
+\makeatother
+
+% non-US spelling option
+\newif\iftictactoeox
+\tictactoeoxfalse
+\DeclareOption{ox}{\tictactoeoxtrue}
+\ProcessOptions\relax
+\iftictactoeox % add the extra options
+\makeatletter
+\@ifundefined{ox}{}{\PackageWarning{tictactoe}{command `ox' already defined}}
+\@ifundefined{oxscore}{}{\PackageWarning{tictactoe}{command `oxscore' already defined}}
+\@ifundefined{oxscorenobox}{}{\PackageWarning{tictactoe}{command `oxscorenobox' already defined}}
+\makeatother
+\newcommand{\ox}[3][1]{\tictactoe[#1]{#2}{#3}}
+\newcommand{\oxscore}[4][1]{\tictactoescore[#1]{#2}{#3}{#4}}
+\newcommand{\oxscorenobox}[4][1]{\tictactoescorenobox[#1]{#2}{#3}{#4}}
+\fi
+
+% for tracking position while drawing grids
+\newcounter{tictacrowmakercounter}
+\newcounter{tictacrowmakermax}
+\newcounter{tictaccellcounter}
+
+% these are the symbols that trigger drawing in the grid
+\newcommand{\tictacX}{X} % full cross
+\newcommand{\tictacx}{x} % faint cross
+\newcommand{\tictacO}{O} % full nought
+\newcommand{\tictaco}{o} % faint nought
+\newcommand{\tictacn}{n} % number of the cell
+
+% scale factor and sizes (given values by user commands)
+\newcommand{\tictacscale}{}
+\newcommand{\tictacscorewidth}{}
+\newcommand{\tictacfontsize}{}
+
+% colours
+\newcommand{\tictocfullcol}{black}
+\newcommand{\tictocfaintcol}{lightgray}
+\newcommand{\tictocwincol}{gray}
+\newcommand{\tictocgridlinescol}{black}
+
+% internal command: draws a cell with a little picture of a nought or a cross
+\newcommand{\tictaccellmaker}[2]{
+    \setcounter{tictaccellcounter}{#1}
+    \if\thetictaccellcounter0
+    \path (0.5*\tictacscale*0.667,2.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter1
+    \path (1.5*\tictacscale*0.667,2.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter2
+    \path (2.5*\tictacscale*0.667,2.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter3
+    \path (0.5*\tictacscale*0.667,1.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter4
+    \path (1.5*\tictacscale*0.667,1.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter5
+    \path (2.5*\tictacscale*0.667,1.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter6
+    \path (0.5*\tictacscale*0.667,0.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter7
+    \path (1.5*\tictacscale*0.667,0.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter8
+    \path (2.5*\tictacscale*0.667,0.5*\tictacscale*0.667) pic{#2};
+    \fi\fi\fi\fi\fi\fi\fi\fi\fi
+}
+
+% internal command: draws a cell as a node with text in
+\newcommand{\tictaccellmarker}[4][1]{
+    \pgfmathsetmacro{\tictacfontsize}{#1*#1*20}
+    \setcounter{tictaccellcounter}{#3}
+    \if\thetictaccellcounter0
+    \node[#2] at (0.5*\tictacscale*0.667,2.5*\tictacscale*0.667) 
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter1
+    \node[#2] at (1.5*\tictacscale*0.667,2.5*\tictacscale*0.667) 
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter2
+    \node[#2] at (2.5*\tictacscale*0.667,2.5*\tictacscale*0.667) 
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter3
+    \node[#2] at (0.5*\tictacscale*0.667,1.5*\tictacscale*0.667) 
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter4
+    \node[#2] at (1.5*\tictacscale*0.667,1.5*\tictacscale*0.667) 
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter5
+    \node[#2] at (2.5*\tictacscale*0.667,1.5*\tictacscale*0.667) 
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter6
+    \node[#2] at (0.5*\tictacscale*0.667,0.5*\tictacscale*0.667) 
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter7
+    \node[#2] at (1.5*\tictacscale*0.667,0.5*\tictacscale*0.667) 
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter8
+    \node[#2] at (2.5*\tictacscale*0.667,0.5*\tictacscale*0.667) 
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \fi\fi\fi\fi\fi\fi\fi\fi\fi
+}
+
+% internal command: draws a row of three cells based on #3 starting from position #2
+\newcommand{\tictacrowmaker}[3][1]{%
+    \setcounter{tictacrowmakercounter}{#2}
+    \setcounter{tictacrowmakermax}{#2}
+    \addtocounter{tictacrowmakermax}{2} % start + 2 makes three
+    \foreach \l [count = \i from 0] in {#3} {
+        \if\i\thetictacrowmakercounter
+        \if\l\tictacX % full cross
+        \tictaccellmaker{\i}{tictacfullcross};
+        \else\if\l\tictacO % full nought
+        \tictaccellmaker{\i}{tictacfullcirc};
+        \else\if\l\tictaco % faint nought
+        \tictaccellmaker{\i}{tictacfaintcirc};
+        \else\if\l\tictacx % faint cross
+        \tictaccellmaker{\i}{tictacfaintcross};
+        \else\if\l\tictacn % number of the cell
+        \tictaccellmarker[#1]{\tictocfaintcol}{\i}{\pgfmathparse{int(\i+1)}\pgfmathresult}
+        \else % just try to draw the symbol that has been provided as input
+        \tictaccellmarker[#1]{\tictocfullcol}{\i}{\l}
+        \fi\fi\fi\fi\fi
+        \if\thetictacrowmakercounter\thetictacrowmakermax\else
+        \addtocounter{tictacrowmakercounter}{1} % if we haven't done three, keep outputting
+        \fi
+        \fi
+    }
+}
+
+% internal command: draw a 3x3 grid
+\newcommand{\tictactoegrid}[3][1]
+{%
+    \renewcommand{\tictacscale}{#1*1.5}%
+    \begin{tikzpicture}[line width=\tictacscale*0.07 cm]
+    \tikzset{ % adapted from https://tex.stackexchange.com/a/634705
+        tictacfullcirc/.pic={\draw[\tictocfullcol] circle (0.2*\tictacscale);},
+        tictacfullcross/.pic={\clip (-0.2*\tictacscale,-0.2*\tictacscale) rectangle
+        (0.2*\tictacscale,0.2*\tictacscale);
+        \draw[\tictocfullcol] (-0.2*\tictacscale,-0.2*\tictacscale) -- 
+        (0.2*\tictacscale,0.2*\tictacscale) (-0.2*\tictacscale,0.2*\tictacscale) -- 
+        (0.2*\tictacscale,-0.2*\tictacscale);},
+        tictacfaintcirc/.pic={\draw[\tictocfaintcol] circle (0.2*\tictacscale);},
+        tictacfaintcross/.pic={\draw[\tictocfaintcol] (-0.2*\tictacscale,-0.2*\tictacscale) --
+        (0.2*\tictacscale,0.2*\tictacscale) (-0.2*\tictacscale,0.2*\tictacscale) --
+        (0.2*\tictacscale,-0.2*\tictacscale);},
+        tictacwin/.style={\tictocwincol,opacity=0.7,line width=\tictacscale*0.07 cm} % winning line
+    }
+    
+    % grid
+    \phantom{\draw (-0.1*\tictacscale,-0.1*\tictacscale) rectangle 
+    (2.1*\tictacscale,2.1*\tictacscale);} % make each pic the same size
+    \foreach \i in {1,2}{\draw[line width=\tictacscale*0.03 cm,\tictocgridlinescol] 
+    (\i*\tictacscale*0.667,0) -- (\i*\tictacscale*0.667,\tictacscale*2) 
+    (0,\i*\tictacscale*0.667) -- (\tictacscale*2,\i*\tictacscale*0.667);}
+    
+    % cells
+    \foreach \y in {0,3,6}{
+        \tictacrowmaker[#1]{\y}{#2}
+    }
+    
+    % winning lines
+    \foreach \l in {#3}
+    {
+        \if\l1 
+        \draw[tictacwin] (0,\tictacscale*1.733) -- (2*\tictacscale,\tictacscale*1.633);
+        \else\if\l2 
+        \draw[tictacwin] (0,\tictacscale*0.95) -- (2*\tictacscale,\tictacscale*1.05);
+        \else\if\l3 
+        \draw[tictacwin] (0,\tictacscale*0.367) -- (2*\tictacscale,\tictacscale*0.267);
+        \else\if\l4 
+        \draw[tictacwin] (\tictacscale*0.267,2*\tictacscale) -- (\tictacscale*0.367,0);
+        \else\if\l5 
+        \draw[tictacwin] (\tictacscale*1.05,2*\tictacscale) -- (\tictacscale*0.95,0);
+        \else\if\l6 
+        \draw[tictacwin] (\tictacscale*1.633,2*\tictacscale) -- (\tictacscale*1.733,0);
+        \else\if\l7 
+        \draw[tictacwin] (0,1.8*\tictacscale) -- (2*\tictacscale,0.2*\tictacscale);
+        \else\if\l8 
+        \draw[tictacwin] (0,0.2*\tictacscale) -- (2*\tictacscale,1.8*\tictacscale);
+        \fi\fi\fi\fi\fi\fi\fi\fi
+    }
+    \end{tikzpicture}%
+}
+
+% user commands: nought and cross in text
+\newcommand{\cross}[1][1]{%
+    \renewcommand{\tictacscale}{#1}\begin{tikzpicture}[line width=\tictacscale*0.12 em, baseline]
+    \clip (-0.33*\tictacscale em,0) rectangle (0.33*\tictacscale em,0.66*\tictacscale em);
+    \draw[\tictocfullcol] (-0.33*\tictacscale em,0) -- (0.33*\tictacscale em,0.66*\tictacscale em)
+    (-0.33*\tictacscale em,0.66*\tictacscale em) -- (0.33*\tictacscale em,0);
+    \end{tikzpicture}\xspace}
+\newcommand{\nought}[1][1]{%
+    \renewcommand{\tictacscale}{#1}\begin{tikzpicture}[line width=\tictacscale*0.12 em, baseline]
+    \draw[\tictocfullcol] (0,0.33*\tictacscale em) circle (0.33*\tictacscale em);
+    \end{tikzpicture}\xspace}
+
+% user command: draw a grid
+\newcommand{\tictactoe}[3][1]{%
+    \pgfmathsetmacro{\tictacscorewidth}{#1*3.5}%
+    \begin{minipage}{\tictacscorewidth cm}\centering
+        \tictactoegrid[#1]{#2}{#3}
+    \end{minipage}%
+}
+
+% user command: draw a grid with a number underneath in a box
+\newcommand{\tictactoescore}[4][1]{%
+    \pgfmathsetmacro{\tictacscorewidth}{#1*3.4}%
+    \pgfmathsetmacro{\tictacfontsize}{#1*18}%
+    \pgfmathsetmacro{\tictacfontspacing}{#1*15}%
+    \fbox{\begin{minipage}{\tictacscorewidth cm}\centering
+            \tictactoegrid[#1]{#2}{#3}\\
+            \fontsize{\tictacfontsize pt}{\tictacfontspacing pt}\selectfont #4
+    \end{minipage}}%
+}
+
+% user command: draw a grid with a number underneath but no box
+\newcommand{\tictactoescorenobox}[4][1]{%
+    \pgfmathsetmacro{\tictacscorewidth}{#1*3.4}%
+    \pgfmathsetmacro{\tictacfontsize}{#1*18}%
+    \pgfmathsetmacro{\tictacfontspacing}{#1*15}%
+    \begin{minipage}{\tictacscorewidth cm}\centering
+        \tictactoegrid[#1]{#2}{#3}\\
+        \fontsize{\tictacfontsize pt}{\tictacfontspacing pt}\selectfont #4
+    \end{minipage}%
+}
+%</tictactoe>
+%    \end{macrocode}

@@ -1,0 +1,278 @@
+%%
+%% This is file `tictactoe.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% tictactoe.dtx  (with options: `tictactoe')
+%% Copyright (c) 2025 Peter Rowlett
+%% 
+%% The package is licenced under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0). To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+\ProvidesPackage{tictactoe}[2024/06/20 tictactoe 1.0]
+
+\RequirePackage{tikz}
+\RequirePackage{xspace}
+
+\makeatletter
+\@ifundefined{c@tictacrowmakercounter}{}
+{\PackageWarning{tictactoe}{counter `tictacrowmakercounter' already defined}}
+\@ifundefined{c@tictacrowmakermax}{}
+{\PackageWarning{tictactoe}{counter `tictacrowmakermax' already defined}}
+\@ifundefined{c@tictaccellcounter}{}
+{\PackageWarning{tictactoe}{counter `tictaccellcounter' already defined}}
+\@ifundefined{tictacX}{}
+{\PackageWarning{tictactoe}{command `tictacX' already defined}}
+\@ifundefined{tictacx}{}
+{\PackageWarning{tictactoe}{command `tictacx' already defined}}
+\@ifundefined{tictacO}{}
+{\PackageWarning{tictactoe}{command `tictacO' already defined}}
+\@ifundefined{tictaco}{}
+{\PackageWarning{tictactoe}{command `tictaco' already defined}}
+\@ifundefined{tictacn}{}
+{\PackageWarning{tictactoe}{command `tictacn' already defined}}
+\@ifundefined{tictacscale}{}
+{\PackageWarning{tictactoe}{command `tictacscale' already defined}}
+\@ifundefined{tictocfullcol}{}
+{\PackageWarning{tictactoe}{command `tictocfullcol' already defined}}
+\@ifundefined{tictocfaintcol}{}
+{\PackageWarning{tictactoe}{command `tictocfaintcol' already defined}}
+\@ifundefined{tictocwincol}{}
+{\PackageWarning{tictactoe}{command `tictocwincol' already defined}}
+\@ifundefined{tictocgridlinescol}{}
+{\PackageWarning{tictactoe}{command `tictocgridlinescol' already defined}}
+\@ifundefined{tictaccellmaker}{}
+{\PackageWarning{tictactoe}{command `tictaccellmaker' already defined}}
+\@ifundefined{tictaccellmarker}{}
+{\PackageWarning{tictactoe}{command `tictaccellmarker' already defined}}
+\@ifundefined{tictacrowmaker}{}
+{\PackageWarning{tictactoe}{command `tictacrowmaker' already defined}}
+\@ifundefined{tictactoegrid}{}
+{\PackageWarning{tictactoe}{command `tictactoegrid' already defined}}
+\@ifundefined{cross}{}
+{\PackageWarning{tictactoe}{command `cross' already defined}}
+\@ifundefined{nought}{}
+{\PackageWarning{tictactoe}{command `nought' already defined}}
+\@ifundefined{tictactoe}{}
+{\PackageWarning{tictactoe}{command `tictactoe' already defined}}
+\@ifundefined{tictactoescore}{}
+{\PackageWarning{tictactoe}{command `tictactoescore' already defined}}
+\@ifundefined{tictactoescorenobox}{}
+{\PackageWarning{tictactoe}{command `tictactoescorenobox' already defined}}
+\@ifundefined{tictacscorewidth}{}
+{\PackageWarning{tictactoe}{command `tictacscorewidth' already defined}}
+\@ifundefined{tictacfontsize}{}
+{\PackageWarning{tictactoe}{command `tictacfontsize' already defined}}
+\@ifundefined{tictacfontspacing}{}
+{\PackageWarning{tictactoe}{command `tictacfontspacing' already defined}}
+\makeatother
+
+\newif\iftictactoeox
+\tictactoeoxfalse
+\DeclareOption{ox}{\tictactoeoxtrue}
+\ProcessOptions\relax
+\iftictactoeox % add the extra options
+\makeatletter
+\@ifundefined{ox}{}{\PackageWarning{tictactoe}{command `ox' already defined}}
+\@ifundefined{oxscore}{}{\PackageWarning{tictactoe}{command `oxscore' already defined}}
+\@ifundefined{oxscorenobox}{}{\PackageWarning{tictactoe}{command `oxscorenobox' already defined}}
+\makeatother
+\newcommand{\ox}[3][1]{\tictactoe[#1]{#2}{#3}}
+\newcommand{\oxscore}[4][1]{\tictactoescore[#1]{#2}{#3}{#4}}
+\newcommand{\oxscorenobox}[4][1]{\tictactoescorenobox[#1]{#2}{#3}{#4}}
+\fi
+
+\newcounter{tictacrowmakercounter}
+\newcounter{tictacrowmakermax}
+\newcounter{tictaccellcounter}
+
+\newcommand{\tictacX}{X} % full cross
+\newcommand{\tictacx}{x} % faint cross
+\newcommand{\tictacO}{O} % full nought
+\newcommand{\tictaco}{o} % faint nought
+\newcommand{\tictacn}{n} % number of the cell
+
+\newcommand{\tictacscale}{}
+\newcommand{\tictacscorewidth}{}
+\newcommand{\tictacfontsize}{}
+
+\newcommand{\tictocfullcol}{black}
+\newcommand{\tictocfaintcol}{lightgray}
+\newcommand{\tictocwincol}{gray}
+\newcommand{\tictocgridlinescol}{black}
+
+\newcommand{\tictaccellmaker}[2]{
+    \setcounter{tictaccellcounter}{#1}
+    \if\thetictaccellcounter0
+    \path (0.5*\tictacscale*0.667,2.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter1
+    \path (1.5*\tictacscale*0.667,2.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter2
+    \path (2.5*\tictacscale*0.667,2.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter3
+    \path (0.5*\tictacscale*0.667,1.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter4
+    \path (1.5*\tictacscale*0.667,1.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter5
+    \path (2.5*\tictacscale*0.667,1.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter6
+    \path (0.5*\tictacscale*0.667,0.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter7
+    \path (1.5*\tictacscale*0.667,0.5*\tictacscale*0.667) pic{#2};
+    \else\if\thetictaccellcounter8
+    \path (2.5*\tictacscale*0.667,0.5*\tictacscale*0.667) pic{#2};
+    \fi\fi\fi\fi\fi\fi\fi\fi\fi
+}
+
+\newcommand{\tictaccellmarker}[4][1]{
+    \pgfmathsetmacro{\tictacfontsize}{#1*#1*20}
+    \setcounter{tictaccellcounter}{#3}
+    \if\thetictaccellcounter0
+    \node[#2] at (0.5*\tictacscale*0.667,2.5*\tictacscale*0.667)
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter1
+    \node[#2] at (1.5*\tictacscale*0.667,2.5*\tictacscale*0.667)
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter2
+    \node[#2] at (2.5*\tictacscale*0.667,2.5*\tictacscale*0.667)
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter3
+    \node[#2] at (0.5*\tictacscale*0.667,1.5*\tictacscale*0.667)
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter4
+    \node[#2] at (1.5*\tictacscale*0.667,1.5*\tictacscale*0.667)
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter5
+    \node[#2] at (2.5*\tictacscale*0.667,1.5*\tictacscale*0.667)
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter6
+    \node[#2] at (0.5*\tictacscale*0.667,0.5*\tictacscale*0.667)
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter7
+    \node[#2] at (1.5*\tictacscale*0.667,0.5*\tictacscale*0.667)
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \else\if\thetictaccellcounter8
+    \node[#2] at (2.5*\tictacscale*0.667,0.5*\tictacscale*0.667)
+    {\sffamily\fontsize{\tictacfontsize pt}{0pt}\selectfont #4};
+    \fi\fi\fi\fi\fi\fi\fi\fi\fi
+}
+
+\newcommand{\tictacrowmaker}[3][1]{%
+    \setcounter{tictacrowmakercounter}{#2}
+    \setcounter{tictacrowmakermax}{#2}
+    \addtocounter{tictacrowmakermax}{2} % start + 2 makes three
+    \foreach \l [count = \i from 0] in {#3} {
+        \if\i\thetictacrowmakercounter
+        \if\l\tictacX % full cross
+        \tictaccellmaker{\i}{tictacfullcross};
+        \else\if\l\tictacO % full nought
+        \tictaccellmaker{\i}{tictacfullcirc};
+        \else\if\l\tictaco % faint nought
+        \tictaccellmaker{\i}{tictacfaintcirc};
+        \else\if\l\tictacx % faint cross
+        \tictaccellmaker{\i}{tictacfaintcross};
+        \else\if\l\tictacn % number of the cell
+        \tictaccellmarker[#1]{\tictocfaintcol}{\i}{\pgfmathparse{int(\i+1)}\pgfmathresult}
+        \else % just try to draw the symbol that has been provided as input
+        \tictaccellmarker[#1]{\tictocfullcol}{\i}{\l}
+        \fi\fi\fi\fi\fi
+        \if\thetictacrowmakercounter\thetictacrowmakermax\else
+        \addtocounter{tictacrowmakercounter}{1} % if we haven't done three, keep outputting
+        \fi
+        \fi
+    }
+}
+
+\newcommand{\tictactoegrid}[3][1]
+{%
+    \renewcommand{\tictacscale}{#1*1.5}%
+    \begin{tikzpicture}[line width=\tictacscale*0.07 cm]
+    \tikzset{ % adapted from https://tex.stackexchange.com/a/634705
+        tictacfullcirc/.pic={\draw[\tictocfullcol] circle (0.2*\tictacscale);},
+        tictacfullcross/.pic={\clip (-0.2*\tictacscale,-0.2*\tictacscale) rectangle
+        (0.2*\tictacscale,0.2*\tictacscale);
+        \draw[\tictocfullcol] (-0.2*\tictacscale,-0.2*\tictacscale) --
+        (0.2*\tictacscale,0.2*\tictacscale) (-0.2*\tictacscale,0.2*\tictacscale) --
+        (0.2*\tictacscale,-0.2*\tictacscale);},
+        tictacfaintcirc/.pic={\draw[\tictocfaintcol] circle (0.2*\tictacscale);},
+        tictacfaintcross/.pic={\draw[\tictocfaintcol] (-0.2*\tictacscale,-0.2*\tictacscale) --
+        (0.2*\tictacscale,0.2*\tictacscale) (-0.2*\tictacscale,0.2*\tictacscale) --
+        (0.2*\tictacscale,-0.2*\tictacscale);},
+        tictacwin/.style={\tictocwincol,opacity=0.7,line width=\tictacscale*0.07 cm} % winning line
+    }
+
+    % grid
+    \phantom{\draw (-0.1*\tictacscale,-0.1*\tictacscale) rectangle
+    (2.1*\tictacscale,2.1*\tictacscale);} % make each pic the same size
+    \foreach \i in {1,2}{\draw[line width=\tictacscale*0.03 cm,\tictocgridlinescol]
+    (\i*\tictacscale*0.667,0) -- (\i*\tictacscale*0.667,\tictacscale*2)
+    (0,\i*\tictacscale*0.667) -- (\tictacscale*2,\i*\tictacscale*0.667);}
+
+    % cells
+    \foreach \y in {0,3,6}{
+        \tictacrowmaker[#1]{\y}{#2}
+    }
+
+    % winning lines
+    \foreach \l in {#3}
+    {
+        \if\l1
+        \draw[tictacwin] (0,\tictacscale*1.733) -- (2*\tictacscale,\tictacscale*1.633);
+        \else\if\l2
+        \draw[tictacwin] (0,\tictacscale*0.95) -- (2*\tictacscale,\tictacscale*1.05);
+        \else\if\l3
+        \draw[tictacwin] (0,\tictacscale*0.367) -- (2*\tictacscale,\tictacscale*0.267);
+        \else\if\l4
+        \draw[tictacwin] (\tictacscale*0.267,2*\tictacscale) -- (\tictacscale*0.367,0);
+        \else\if\l5
+        \draw[tictacwin] (\tictacscale*1.05,2*\tictacscale) -- (\tictacscale*0.95,0);
+        \else\if\l6
+        \draw[tictacwin] (\tictacscale*1.633,2*\tictacscale) -- (\tictacscale*1.733,0);
+        \else\if\l7
+        \draw[tictacwin] (0,1.8*\tictacscale) -- (2*\tictacscale,0.2*\tictacscale);
+        \else\if\l8
+        \draw[tictacwin] (0,0.2*\tictacscale) -- (2*\tictacscale,1.8*\tictacscale);
+        \fi\fi\fi\fi\fi\fi\fi\fi
+    }
+    \end{tikzpicture}%
+}
+
+\newcommand{\cross}[1][1]{%
+    \renewcommand{\tictacscale}{#1}\begin{tikzpicture}[line width=\tictacscale*0.12 em, baseline]
+    \clip (-0.33*\tictacscale em,0) rectangle (0.33*\tictacscale em,0.66*\tictacscale em);
+    \draw[\tictocfullcol] (-0.33*\tictacscale em,0) -- (0.33*\tictacscale em,0.66*\tictacscale em)
+    (-0.33*\tictacscale em,0.66*\tictacscale em) -- (0.33*\tictacscale em,0);
+    \end{tikzpicture}\xspace}
+\newcommand{\nought}[1][1]{%
+    \renewcommand{\tictacscale}{#1}\begin{tikzpicture}[line width=\tictacscale*0.12 em, baseline]
+    \draw[\tictocfullcol] (0,0.33*\tictacscale em) circle (0.33*\tictacscale em);
+    \end{tikzpicture}\xspace}
+
+\newcommand{\tictactoe}[3][1]{%
+    \pgfmathsetmacro{\tictacscorewidth}{#1*3.5}%
+    \begin{minipage}{\tictacscorewidth cm}\centering
+        \tictactoegrid[#1]{#2}{#3}
+    \end{minipage}%
+}
+
+\newcommand{\tictactoescore}[4][1]{%
+    \pgfmathsetmacro{\tictacscorewidth}{#1*3.4}%
+    \pgfmathsetmacro{\tictacfontsize}{#1*18}%
+    \pgfmathsetmacro{\tictacfontspacing}{#1*15}%
+    \fbox{\begin{minipage}{\tictacscorewidth cm}\centering
+            \tictactoegrid[#1]{#2}{#3}\\
+            \fontsize{\tictacfontsize pt}{\tictacfontspacing pt}\selectfont #4
+    \end{minipage}}%
+}
+
+\newcommand{\tictactoescorenobox}[4][1]{%
+    \pgfmathsetmacro{\tictacscorewidth}{#1*3.4}%
+    \pgfmathsetmacro{\tictacfontsize}{#1*18}%
+    \pgfmathsetmacro{\tictacfontspacing}{#1*15}%
+    \begin{minipage}{\tictacscorewidth cm}\centering
+        \tictactoegrid[#1]{#2}{#3}\\
+        \fontsize{\tictacfontsize pt}{\tictacfontspacing pt}\selectfont #4
+    \end{minipage}%
+}
+\endinput
+%%
+%% End of file `tictactoe.sty'.
